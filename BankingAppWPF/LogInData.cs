@@ -415,7 +415,6 @@ namespace BankingAppWPF
         /// <param name="client">Клиент, кому закрепляется счет</param>
         public static void NewAccountToXml(BankAccount newAccount, Client client)
         {
-
         }
 
     }
