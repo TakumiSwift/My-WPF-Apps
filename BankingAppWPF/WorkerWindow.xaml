@@ -1,0 +1,121 @@
+﻿<Window x:Class="BankingAppWPF.WorkerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankingAppWPF"
+        mc:Ignorable="d"
+        Title="Главное меню"
+        Height="450"
+        Width="800"
+        MinHeight="450"
+        MinWidth="800">
+    <Grid Background="#FFBAE0B9">
+        <TabControl>
+            <TabItem Header="Новости" Margin="16,-2,-21,1">
+                <Grid Background="#FFBAE0B9"/>
+            </TabItem>
+            <TabItem Header="Мои Клиенты"
+                     Margin="149,-2,-153,1"
+                     GotFocus="TabItem_GotFocus">
+                <Grid Background="#FFBAE0B9">
+                    <ListView x:Name="lsvMyClients"
+                              Background="#FF83A482"
+                              Height="346"
+                              VerticalAlignment="Top">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ФИО"
+                                                Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding FirstName}"/>
+                                                <TextBlock Text="{Binding LastName}"/>
+                                                <TextBlock Text="{Binding SurName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Паспорт"
+                                                Width="100"
+                                                DisplayMemberBinding="{Binding Passport}"/>
+                                <GridViewColumn Header="Телефон"
+                                                Width="100"
+                                                DisplayMemberBinding="{Binding Phone}"/>
+                                <GridViewColumn Header="Зарплата"
+                                                Width="100"
+                                                DisplayMemberBinding="{Binding Salary}"/>
+                                <GridViewColumn x:Name="gvcAccounts"
+                                                Header="Счета"
+                                                Width="288">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ItemsControl ItemsSource="{Binding AccountNumbers}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Vertical">
+                                                            <TextBlock Text="{Binding AccountType.TypeName}"/>
+                                                            <TextBlock Text="{Binding AccountNumber}"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button x:Name="btnNewOffer"
+                            Content="Новое Предложение"
+                            HorizontalAlignment="Left"
+                            Margin="657,351,0,0"
+                            VerticalAlignment="Top"
+                            Height="37"
+                            Width="127"
+                            Click="btnNewOffer_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Предложения Клиентам" Margin="285,-2,-287,1">
+                <Grid Background="#FFBAE0B9"/>
+            </TabItem>
+            <TabItem x:Name="tItemMyCab"
+                Header="Мой Кабинет" 
+                Margin="410,-2,-413,1"
+                GotFocus="tItemMyCab_GotFocus">
+                <Grid Background="#FFBAE0B9">
+                    <Button x:Name="btnLeaveAccount"
+                        Content="Выйти из аккаунта"
+                        Margin="0,0,31,39"
+                        Click="btnLeaveAccount_Click"
+                        Height="30"
+                        MaxHeight="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110"/>
+                    <TextBlock x:Name="tbxWorkerFullname"
+                               HorizontalAlignment="Center"
+                               Margin="0,23,0,0"
+                               TextWrapping="Wrap"
+                               Text=""
+                               VerticalAlignment="Top"
+                               Height="22"
+                               Width="320"
+                               TextAlignment="Center"
+                               FontFamily="Times New Roman"
+                               FontSize="20"/>
+                    <TextBlock x:Name="tbxWorkerPosition"
+                               HorizontalAlignment="Center"
+                               Margin="0,63,0,0"
+                               TextWrapping="Wrap"
+                               Text="TextBlock"
+                               VerticalAlignment="Top"
+                               Height="22"
+                               Width="320"
+                               TextAlignment="Center"
+                               FontFamily="Times New Roman"
+                               FontSize="20"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

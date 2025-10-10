@@ -1,0 +1,390 @@
+﻿<Window x:Class="BankingAppWPF.ClientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankingAppWPF"
+        mc:Ignorable="d"
+        Title="Банк ''A''" Height="450" Width="800">
+    <Grid Background="#FFBAE0B9">
+        <TabControl>
+            <TabItem Header="Главное меню">
+                <Grid Background="#FF799A79">
+                    <TextBox HorizontalAlignment="Left"
+                             Margin="10,10,0,0"
+                             TextWrapping="Wrap"
+                             Text="Ваши счета"
+                             VerticalAlignment="Top"
+                             Width="154"
+                             Height="32"
+                             Background="#FF71C576"
+                             Foreground="White"
+                             FontFamily="Times New Roman"
+                             FontSize="22"
+                             TextAlignment="Center"/>
+                    <ComboBox x:Name="cbxAccounts"
+                              HorizontalAlignment="Left"
+                              Margin="10,61,0,0"
+                              VerticalAlignment="Top"
+                              Width="154"
+                              Height="44"
+                              Background="#FF71C576"
+                              Foreground="White"
+                              DropDownOpened="cbxAccounts_DropDownOpened"
+                              DropDownClosed="cbxAccounts_DropDownClosed">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="#FF6EAB6C">
+                                    <TextBlock Text="{Binding AccountType.TypeName}"
+                                               Background="#FF6EAB6C"
+                                               Foreground="White"/>
+                                    <TextBlock Text="{Binding MoneyAmount}"
+                                               Background="#FF6EAB6C"
+                                               Foreground="White"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock x:Name="tbkAccountInfo"
+                               Margin="0,10,205,0"
+                               TextWrapping="Wrap"
+                               Text="Информация о Счете"
+                               VerticalAlignment="Top"
+                               Height="32"
+                               Background="#FF71C576"
+                               Foreground="White"
+                               FontFamily="Times New Roman"
+                               FontSize="22"
+                               TextAlignment="Center"
+                               HorizontalAlignment="Right"
+                               Width="228"
+                               Visibility="Hidden"/>
+                    <Grid x:Name="gridInfo"
+                          Margin="229,61,73,51"
+                          Background="#FF73A266"
+                          Visibility="Hidden">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   Text="Тип Счета"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   FontFamily="Times New Roman"
+                                   FontSize="18"/>
+                        <TextBlock HorizontalAlignment="Center"
+                                   Grid.Row="1"
+                                   TextWrapping="Wrap"
+                                   Text="Номер Счета"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   FontFamily="Times New Roman"
+                                   FontSize="18"/>
+                        <TextBlock HorizontalAlignment="Center"
+                                   Grid.Row="2"
+                                   TextWrapping="Wrap"
+                                   Text="Денег на Счете"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   FontFamily="Times New Roman"
+                                   FontSize="18"/>
+                        <TextBlock HorizontalAlignment="Center"
+                                   Grid.Row="3"
+                                   TextWrapping="Wrap"
+                                   Text="Дата открытия Счета"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   FontFamily="Times New Roman"
+                                   FontSize="18"
+                                   TextAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center"
+                                   Grid.Row="4"
+                                   TextWrapping="Wrap"
+                                   Text="Срок действия"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   FontFamily="Times New Roman"
+                                   FontSize="18"
+                                   TextAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center"
+                                   Grid.Row="5"
+                                   TextWrapping="Wrap"
+                                   Text="Процентная ставка"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   FontFamily="Times New Roman"
+                                   FontSize="18"
+                                   TextAlignment="Center"/>
+                        <ListBox x:Name="lbxAccountInfo"
+                                 Grid.Column="1"
+                                 Grid.RowSpan="6"
+                                 HorizontalAlignment="Stretch">
+                            <ListBoxItem Grid.Row="0" Margin="5,20"></ListBoxItem>
+                            <ListBoxItem Grid.Row="1" Margin="5,20"></ListBoxItem>
+                            <ListBoxItem Grid.Row="2" Margin="5,20"></ListBoxItem>
+                            <ListBoxItem Grid.Row="3" Margin="5,20"></ListBoxItem>
+                            <ListBoxItem Grid.Row="4" Margin="5,20"></ListBoxItem>
+                            <ListBoxItem Grid.Row="5" Margin="5,20"></ListBoxItem>
+                        </ListBox>
+
+                    </Grid>
+                    <Grid/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Операции" Margin="148,-2,-152,0">
+                <Grid Background="#FF799A79">
+                    <Button x:Name="btnNewAccount"
+                            Content="Открыть счет"
+                            HorizontalAlignment="Left"
+                            Margin="10,35,0,0"
+                            VerticalAlignment="Top"
+                            Height="37"
+                            Width="139"
+                            Click="btnNewAccount_Click"/>
+                    <Grid x:Name="gridNewAccount"
+                          Margin="126,104,126,25"
+                          Visibility="Hidden">
+                        <Button x:Name="btnDebit"
+                            Content="Дебетовый"
+                            HorizontalAlignment="Left"
+                            Margin="35,163,0,0"
+                            Width="128"
+                            Height="41"
+                            VerticalAlignment="Top"/>
+                        <Button x:Name ="btnCredit"
+                            Content="Кредитный"
+                            Margin="207,163,0,0"
+                            HorizontalAlignment="Left"
+                            Width="128"
+                            Height="41"
+                            VerticalAlignment="Top"/>
+                        <Button x:Name ="btnSavings"
+                            Content="Вкладовый"
+                            HorizontalAlignment="Left"
+                            Margin="378,163,0,0"
+                            Width="128"
+                            Height="41"
+                            VerticalAlignment="Top"/>
+                    </Grid>
+                    <Button x:Name="btnConfirm"
+                            Content="Принять"
+                            HorizontalAlignment="Left"
+                            Margin="142,276,0,0"
+                            VerticalAlignment="Top"
+                            Height="40"
+                            Width="122"
+                            Visibility="Hidden"/>
+                    <Button x:Name="btnCancel"
+                        Content="Отклонить"
+                        HorizontalAlignment="Left"
+                        Margin="363,276,0,0"
+                        VerticalAlignment="Top"
+                        Height="40"
+                        Width="122"
+                        Visibility="Hidden"/>
+                    <Button x:Name="btnTransfer"
+                            Content="Перевести деньги"
+                            HorizontalAlignment="Center"
+                            Margin="0,36,0,0"
+                            VerticalAlignment="Top"
+                            Height="36"
+                            Width="146"
+                            Click="btnTransfer_Click"/>
+                    <Grid x:Name ="gridTransfer" Margin="102,128,102,49" Visibility="Hidden">
+                        <TextBlock HorizontalAlignment="Left"
+                                   Margin="19,31,0,0"
+                                   TextWrapping="Wrap"
+                                   Text="Номер Счета Получателя"
+                                   VerticalAlignment="Top"
+                                   Height="41"
+                                   Width="168"
+                                   Background="#FF4EA45E"
+                                   Foreground="White"
+                                   FontFamily="Times New Roman"
+                                   FontSize="18"
+                                   TextAlignment="Center"/>
+                        <TextBox x:Name="tbxTransferAccount"
+                                 HorizontalAlignment="Center"
+                                 Margin="0,33,0,0"
+                                 TextWrapping="Wrap"
+                                 Text="...Начните ввод..."
+                                 VerticalAlignment="Top"
+                                 Width="155"
+                                 Height="39"
+                                 TextAlignment="Center"
+                                 FontFamily="Times New Roman"
+                                 FontSize="18"
+                                 Background="White"
+                                 Foreground="Black"/>
+                        <TextBlock HorizontalAlignment="Left"
+                            Margin="19,0,0,0"
+                            TextWrapping="Wrap"
+                            Text="Сумма перевода"
+                            VerticalAlignment="Center"
+                            Height="41"
+                            Width="168"
+                            Background="#FF4EA45E"
+                            Foreground="White"
+                            FontFamily="Times New Roman"
+                            FontSize="18"
+                            TextAlignment="Center"/>
+                        <TextBox x:Name="tbxTransferSummary"
+                            HorizontalAlignment="Center"
+                            TextWrapping="Wrap"
+                            Text="...Начните ввод..."
+                            VerticalAlignment="Center"
+                            Width="154"
+                            Height="39"
+                            TextAlignment="Center"
+                            FontFamily="Times New Roman"
+                            FontSize="18"
+                            Background="White"
+                            Foreground="Black"/>
+                        <TextBlock HorizontalAlignment="Left"
+                            Margin="19,158,0,0"
+                            TextWrapping="Wrap"
+                            Text="Счет списания"
+                            VerticalAlignment="Top"
+                            Height="41"
+                            Width="168"
+                            Background="#FF4EA45E"
+                            Foreground="White"
+                            FontFamily="Times New Roman"
+                            FontSize="18"
+                            TextAlignment="Center"/>
+                        <ComboBox x:Name="cbxAccountToTransfer"
+                              HorizontalAlignment="Center"
+                              Margin="0,158,0,0"
+                              VerticalAlignment="Top"
+                              Width="154"
+                              Height="44"
+                              Background="#FF71C576"
+                              Foreground="White"
+                              DropDownOpened="cbxAccounts_DropDownOpened"
+                              DropDownClosed="cbxAccounts_DropDownClosed">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Background="#FF6EAB6C">
+                                        <TextBlock Text="{Binding AccountType.TypeName}"
+                                               Background="#FF6EAB6C"
+                                               Foreground="White"/>
+                                        <TextBlock Text="{Binding MoneyAmount}"
+                                               Background="#FF6EAB6C"
+                                               Foreground="White"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button x:Name="btnConfirmTransfer"
+                                Content="Подтвердить перевод"
+                                HorizontalAlignment="Left"
+                                Margin="452,0,0,0"
+                                VerticalAlignment="Center"
+                                Height="37"
+                                Width="128"
+                                Click="btnConfirmTransfer_Click"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabOffers"
+                     Header="Предложения" 
+                     Margin="311,-4,-315,1" 
+                     Initialized="TabItem_GotFocus">
+                <Grid Background="#FF799A79">
+                    <ListBox x:Name="lbxOffers"
+                             Background="#FF799A79"
+                             Margin="0,0,0,66"
+                             Visibility="Hidden" 
+                             GotFocus="lbxOffers_GotFocus">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding TypeName, StringFormat='Тип предложения: {0} '}"
+                                               Foreground="White"/>
+                                    <TextBlock Text="{Binding InterestRate, StringFormat='под {0}% '}"
+                                               Foreground="White"/>
+                                    <TextBlock Text="{Binding PaymentPeriod.Days, StringFormat='на {0} месяцев          '}"
+                                               Foreground="White"/>
+                                    <RadioButton Checked="RadioButton_Checked"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button x:Name="btnAllowOffer"
+                            Content="Принять"
+                            HorizontalAlignment="Left"
+                            Margin="573,356,0,0"
+                            VerticalAlignment="Top"
+                            Height="32"
+                            Width="122"
+                            Visibility="Hidden" Click="btnAllowOffer_Click"/>
+                    <Button x:Name="btnDeclineOffer"
+                        Content="Отказаться"
+                        HorizontalAlignment="Left"
+                        Margin="397,356,0,0"
+                        VerticalAlignment="Top"
+                        Height="32"
+                        Width="122"
+                        Visibility="Hidden" Click="btnDeclineOffer_Click"/>
+                    <TextBox x:Name="tbxAmount"
+                             HorizontalAlignment="Left" 
+                             Margin="361,356,0,0"
+                             TextWrapping="Wrap" 
+                             Text="" 
+                             VerticalAlignment="Top"
+                             Width="136"
+                             Height="32"
+                             FontFamily="Times New Roman"
+                             FontSize="16"
+                             TextAlignment="Center"
+                             Visibility="Hidden"/>
+                    <TextBlock x:Name="tbkAmount"
+                               HorizontalAlignment="Left"
+                               Margin="190,350,0,0"
+                               TextWrapping="Wrap"
+                               Text="Введите желаемую сумму справа"
+                               VerticalAlignment="Top" 
+                               Height="46" 
+                               Width="134"
+                               TextAlignment="Center"
+                               FontFamily="Times New Roman"
+                               FontSize="16"
+                               Background="Black"
+                               Foreground="White"
+                               Visibility="Hidden"/>
+                    <Button x:Name="btnAmountConfirm"
+                            Content="Подтвердить"
+                            HorizontalAlignment="Left"
+                            Margin="528,356,0,0"
+                            VerticalAlignment="Top"
+                            Height="32"
+                            Width="106"
+                            Visibility="Hidden"
+                            Click="btnAmountConfirm_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Кабинет" Margin="479,-2,-483,0">
+                <Grid Background="#FF799A79">
+                    <Button x:Name="btnLeaveWindow"
+                            Content="Выйти из аккаунта"
+                            HorizontalAlignment="Left"
+                            Margin="527,295,0,0"
+                            VerticalAlignment="Top"
+                            Height="75"
+                            Width="172" Click="btnLeaveWindow_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

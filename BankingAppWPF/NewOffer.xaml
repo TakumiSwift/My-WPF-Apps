@@ -1,0 +1,96 @@
+﻿<Window x:Class="BankingAppWPF.NewOffer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankingAppWPF"
+        mc:Ignorable="d"
+        Title="Новое предложение" 
+        MinHeight="600" MinWidth="400"
+        MaxHeight="600" MaxWidth="400">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center"
+                   Margin="0,10,0,0"
+                   TextWrapping="Wrap"
+                   Text="Тип предложения"
+                   VerticalAlignment="Top"
+                   Height="20"
+                   Width="132"
+                   FontFamily="Times New Roman"
+                   FontSize="16"
+                   TextAlignment="Center"/>
+        <ComboBox x:Name="cbxOfferType"
+                  HorizontalAlignment="Center" 
+                  Margin="0,44,0,0" 
+                  VerticalAlignment="Top"
+                  Width="112"
+                  FontFamily="Times New Roman" FontSize="16"
+                  DropDownOpened="cbxOfferType_DropDownOpened"
+                  DropDownClosed="cbxOfferType_DropDownClosed">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding TypeName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock x:Name="tbk1"
+                   HorizontalAlignment="Center"
+                   Margin="0,91,0,0"
+                   TextWrapping="Wrap"
+                   Text="Процентная ставка" 
+                   VerticalAlignment="Top" 
+                   Height="25" 
+                   Width="132" 
+                   FontFamily="Times New Roman"
+                   FontSize="16"
+                   TextAlignment="Center"
+                   Visibility="Hidden"/>
+        <TextBox x:Name="tbxInterestRate"
+                 HorizontalAlignment="Center"
+                 Margin="0,130,0,0" 
+                 TextWrapping="Wrap"
+                 Text="" 
+                 VerticalAlignment="Top"
+                 Width="120"
+                 Height="26" 
+                 TextAlignment="Center"
+                 Visibility="Hidden" 
+                 FontFamily="Times New Roman" 
+                 FontSize="16"/>
+        <TextBlock x:Name="tbk2"
+                   HorizontalAlignment="Center"
+                   Margin="0,181,0,0"
+                   TextWrapping="Wrap"
+                   Text="Срок действия Счета" 
+                   VerticalAlignment="Top" 
+                   Height="39" 
+                   Width="132" 
+                   FontFamily="Times New Roman"
+                   FontSize="16"
+                   TextAlignment="Center"
+                   Visibility="Hidden"/>
+        <TextBox x:Name="tbxPaymentPeriod"
+            HorizontalAlignment="Center"
+            Margin="0,234,0,0" 
+            TextWrapping="Wrap"
+            Text="" 
+            VerticalAlignment="Top"
+            Width="120"
+            Height="26" 
+            TextAlignment="Center"
+            FontFamily="Times New Roman" 
+            FontSize="16"
+            Visibility="Hidden"/>
+        <Button x:Name="btnConfirm"
+                Content="Отправить предложение" 
+                HorizontalAlignment="Center"
+                Margin="0,292,0,0"
+                VerticalAlignment="Top"
+                Height="44"
+                Width="158"
+                Visibility="Hidden"
+                Click="btnConfirm_Click"/>
+    </Grid>
+</Window>
