@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Workers>
+	<Departments>
+		<Department direction="Casual">
+			<Worker fullname="Иванов%Иван%Иванович" position="HeadOfDepartment">
+				<Login>IvanovI.I.C</Login>
+				<Password>012345</Password>
+			</Worker>
+			<Worker fullname="Петров%Петр%Петрович" position="Manager">
+				<Login>PetrovP.P.C</Login>
+				<Password>123456</Password>
+			</Worker>
+			<Worker fullname="Юрьев%Юрий%Юрьевич" position="Consultant">
+				<Login>YuryevY.Y.C</Login>
+				<Password>234567</Password>
+			</Worker>
+		</Department>
+		<Department direction="Vip">
+			<Worker fullname="Иванов%Иван%Иванович" position="HeadOfDepartment">
+				<Login>IvanovI.I.V</Login>
+				<Password>012345</Password>
+			</Worker>
+			<Worker fullname="Петров%Петр%Петрович" position="Manager">
+				<Login>PetrovP.P.V</Login>
+				<Password>123456</Password>
+			</Worker>
+			<Worker fullname="Юрьев%Юрий%Юрьевич" position="Consultant">
+				<Login>YuryevY.Y.V</Login>
+				<Password>234567</Password>
+			</Worker>
+		</Department>
+		<Department direction="LegalEntity">
+			<Worker fullname="Иванов%Иван%Иванович" position="HeadOfDepartment">
+				<Login>IvanovI.I.L</Login>
+				<Password>012345</Password>
+			</Worker>
+			<Worker fullname="Петров%Петр%Петрович" position="Manager">
+				<Login>PetrovP.P.L</Login>
+				<Password>123456</Password>
+			</Worker>
+			<Worker fullname="Юрьев%Юрий%Юрьевич" position="Consultant">
+				<Login>YuryevY.Y.L</Login>
+				<Password>234567</Password>
+			</Worker>
+		</Department>
+	</Departments>
+</Workers>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Offers>
+  <Offer status="wait" id="10001">
+    <Data type="CreditAccount" procent="25" period="12" offerDate="09.10.2025 16:56:33" />
+    <Recipient passport="1234012345" />
+  </Offer>
+  <Offer status="wait" id="10002">
+    <Data type="CreditAccount" procent="20" period="12" offerDate="09.10.2025 16:56:33" />
+    <Recipient passport="1234012345" />
+  </Offer>
+  <Offer status="wait" id="10003">
+    <Data type="SavingsAccount" procent="12" period="12" offerDate="09.10.2025 16:58:31" />
+    <Recipient passport="2345012345" />
+  </Offer>
+</Offers>
