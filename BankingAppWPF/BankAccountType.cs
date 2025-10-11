@@ -83,7 +83,7 @@ namespace BankingAppWPF
         
         public string GetOpeningDate(BankAccountType bat)
         {
-            return Convert.ToString(bat.AccountOpeningDate);
+            return $"{Convert.ToString(bat.AccountOpeningDate.Date)}";
         }
 
         public string GetPaymentPeriod(BankAccountType bat)

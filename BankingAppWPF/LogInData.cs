@@ -415,6 +415,39 @@ namespace BankingAppWPF
         /// <param name="client">Клиент, кому закрепляется счет</param>
         public static void NewAccountToXml(BankAccount newAccount, Client client)
         {
+            var docA = XDocument.Load(@"AccountData/AccountData.xml");
+            var xmlA = docA.Descendants("Accounts")
+                           .Descendants("AccountType")
+                           .ToList();
+            xmlA.Find(x => x.Attribute("type").Value == newAccount.AccountType.GetType().Name).Add(CreateNewXAccount(newAccount));
+            docA.Root.ReplaceAll(xmlA);
+            docA.Save(@"AccountData/AccountData.xml");
+            var docC = XDocument.Load(@"ClientData/ClientData.xml");
+            var xmlC = docC.Descendants("Clients")
+                           .Descendants("Departments")
+                           .Descendants("Department")
+                           .ToList();
+            xmlC.Find(x => x.Element("Client").Element("PersonalData").Element("Passport").Value == Convert.ToString(client.Passport))
+                .Element("Client").Element("PersonalData").Element("AccountNumbers").Value+=$",{newAccount.AccountNumber}";
+            docC.Root.Element("Departments").ReplaceAll(xmlC);
+            docC.Save(@"ClientData/ClientData.xml");
+        }
+
+
+        private static XElement CreateNewXAccount(BankAccount account)
+        {
+            XElement acc = new("Account");
+            XElement num = new("Number",account.AccountNumber);
+            XElement date = new("OpeningDate",account.AccountType.GetOpeningDate(account.AccountType));
+            XElement money = new("MoneyAmount",account.MoneyAmount);
+            acc.Add(num, date, money);
+            if (account.AccountType.GetType() == typeof(CreditAccount) || account.AccountType.GetType() == typeof(SavingsAccount))
+            {
+                XElement irate = new("InterestRate",account.AccountType.InterestRate);
+                XElement period = new("PaymentPeriod", (account.AccountType.PaymentPeriod)/30);
+                acc.Add(irate, period);
+            }
+            return acc;
         }
 
     }

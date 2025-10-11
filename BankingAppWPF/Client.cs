@@ -111,6 +111,8 @@ namespace BankingAppWPF
                                                                                 creditPeriod)));
                     break;
             }
+            int index = client.AccountNumbers.Count - 1;
+            LogInData.NewAccountToXml(client.AccountNumbers[index], client);
             return client;
         }
 
