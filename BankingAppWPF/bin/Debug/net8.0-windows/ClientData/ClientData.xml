@@ -1,89 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Clients>
-	<Departments>
-		<Department direction="Casual">
-			<Client>
-				<LoginData>
-					<Login>IvanovI.I.Cc</Login>
-					<Password>012345</Password>
-				</LoginData>
-				<PersonalData>
-					<Fullname>Иванов Иван Иванович</Fullname>
-					<Phone>89998887766</Phone>
-					<Passport>1234012345</Passport>
-					<AccountNumbers>100001,200001,300001</AccountNumbers>
-					<Salary>50000</Salary>
-				</PersonalData>
-			</Client>
-			<Client>
-				<LoginData>
-					<Login>PetrovP.P.Cc</Login>
-					<Password>012345</Password>
-				</LoginData>
-				<PersonalData>
-					<Fullname>Петров Петр Петрович</Fullname>
-					<Phone>89998887765</Phone>
-					<Passport>2345012345</Passport>
-					<AccountNumbers>100002,200002,300002</AccountNumbers>
-					<Salary>30000</Salary>
-				</PersonalData>
-			</Client>
-		</Department>
-		<Department direction="Vip">
-			<Client>
-				<LoginData>
-					<Login>IvanovI.I.Cv</Login>
-					<Password>012345</Password>
-				</LoginData>
-				<PersonalData>
-					<Fullname>Иванов Иван Иванович</Fullname>
-					<Phone>89998887766</Phone>
-					<Passport>1234012345</Passport>
-					<AccountNumbers>100003</AccountNumbers>
-					<Salary>500000</Salary>
-				</PersonalData>
-			</Client>
-			<Client>
-				<LoginData>
-					<Login>PetrovP.P.Cv</Login>
-					<Password>012345</Password>
-				</LoginData>
-				<PersonalData>
-					<Fullname>Петров Петр Петрович</Fullname>
-					<Phone>89998887765</Phone>
-					<Passport>2345012345</Passport>
-					<AccountNumbers>100004</AccountNumbers>
-					<Salary>300000</Salary>
-				</PersonalData>
-			</Client>
-		</Department>
-		<Department direction="LegalEntity">
-			<Client>
-				<LoginData>
-					<Login>IvanovI.I.Cl</Login>
-					<Password>012345</Password>
-				</LoginData>
-				<PersonalData>
-					<Fullname>Иванов Иван Иванович</Fullname>
-					<Phone>89998887766</Phone>
-					<Passport>1234012345</Passport>
-					<AccountNumbers>100005,200003</AccountNumbers>
-					<Salary>5000000</Salary>
-				</PersonalData>
-			</Client>
-			<Client>
-				<LoginData>
-					<Login>PetrovP.P.Cl</Login>
-					<Password>012345</Password>
-				</LoginData>
-				<PersonalData>
-					<Fullname>Петров Петр Петрович</Fullname>
-					<Phone>89998887765</Phone>
-					<Passport>2345012345</Passport>
-					<AccountNumbers>100006,200004</AccountNumbers>
-					<Salary>3000000</Salary>
-				</PersonalData>
-			</Client>
-		</Department>
-	</Departments>
+  <Departments>
+    <Department direction="Casual">
+      <Client>
+        <LoginData>
+          <Login>IvanovI.I.Cc</Login>
+          <Password>012345</Password>
+        </LoginData>
+        <PersonalData>
+          <Fullname>Иванов Иван Иванович</Fullname>
+          <Phone>89998887766</Phone>
+          <Passport>1234012345</Passport>
+          <AccountNumbers>100001,200001,300001,200005,200006,300003,300004</AccountNumbers>
+          <Salary>50000</Salary>
+        </PersonalData>
+      </Client>
+      <Client>
+        <LoginData>
+          <Login>PetrovP.P.Cc</Login>
+          <Password>012345</Password>
+        </LoginData>
+        <PersonalData>
+          <Fullname>Петров Петр Петрович</Fullname>
+          <Phone>89998887765</Phone>
+          <Passport>2345012345</Passport>
+          <AccountNumbers>100002,200002,300002,300005,100007</AccountNumbers>
+          <Salary>30000</Salary>
+        </PersonalData>
+      </Client>
+    </Department>
+    <Department direction="Vip">
+      <Client>
+        <LoginData>
+          <Login>IvanovI.I.Cv</Login>
+          <Password>012345</Password>
+        </LoginData>
+        <PersonalData>
+          <Fullname>Иванов Иван Иванович</Fullname>
+          <Phone>89998887766</Phone>
+          <Passport>0234012345</Passport>
+          <AccountNumbers>100003</AccountNumbers>
+          <Salary>500000</Salary>
+        </PersonalData>
+      </Client>
+      <Client>
+        <LoginData>
+          <Login>PetrovP.P.Cv</Login>
+          <Password>012345</Password>
+        </LoginData>
+        <PersonalData>
+          <Fullname>Петров Петр Петрович</Fullname>
+          <Phone>89998887765</Phone>
+          <Passport>1345012345</Passport>
+          <AccountNumbers>100004</AccountNumbers>
+          <Salary>300000</Salary>
+        </PersonalData>
+      </Client>
+    </Department>
+    <Department direction="LegalEntity">
+      <Client>
+        <LoginData>
+          <Login>IvanovI.I.Cl</Login>
+          <Password>012345</Password>
+        </LoginData>
+        <PersonalData>
+          <Fullname>Иванов Иван Иванович</Fullname>
+          <Phone>89998887766</Phone>
+          <Passport>3234012345</Passport>
+          <AccountNumbers>100005,200003</AccountNumbers>
+          <Salary>5000000</Salary>
+        </PersonalData>
+      </Client>
+      <Client>
+        <LoginData>
+          <Login>PetrovP.P.Cl</Login>
+          <Password>012345</Password>
+        </LoginData>
+        <PersonalData>
+          <Fullname>Петров Петр Петрович</Fullname>
+          <Phone>89998887765</Phone>
+          <Passport>5345012345</Passport>
+          <AccountNumbers>100006,200004</AccountNumbers>
+          <Salary>3000000</Salary>
+        </PersonalData>
+      </Client>
+    </Department>
+  </Departments>
 </Clients>

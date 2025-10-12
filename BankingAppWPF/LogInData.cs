@@ -427,13 +427,26 @@ namespace BankingAppWPF
                            .Descendants("Departments")
                            .Descendants("Department")
                            .ToList();
-            xmlC.Find(x => x.Element("Client").Element("PersonalData").Element("Passport").Value == Convert.ToString(client.Passport))
-                .Element("Client").Element("PersonalData").Element("AccountNumbers").Value+=$",{newAccount.AccountNumber}";
+            for( int i = 0;  i < xmlC.Count; i++ )
+            {
+                List<XElement> xE = xmlC[i].Elements("Client").ToList();
+                if (xE.Contains(xE.Find(x => x.Element("PersonalData").Element("Passport").Value == Convert.ToString(client.Passport))))
+                {
+                    xE.Find(x => x.Element("PersonalData").Element("Passport").Value == Convert.ToString(client.Passport))
+                    .Element("PersonalData").Element("AccountNumbers").Value += $",{newAccount.AccountNumber}";
+                    xmlC[i].ReplaceAll(xE);
+                    xmlC[i].Add(new XAttribute("direction", client._Department.GetType().Name));
+                }
+            }
             docC.Root.Element("Departments").ReplaceAll(xmlC);
             docC.Save(@"ClientData/ClientData.xml");
         }
 
-
+        /// <summary>
+        /// Метод создания нового XAccount
+        /// </summary>
+        /// <param name="account">Экземпляр Счета</param>
+        /// <returns>XAccount</returns>
         private static XElement CreateNewXAccount(BankAccount account)
         {
             XElement acc = new("Account");
@@ -444,7 +457,8 @@ namespace BankingAppWPF
             if (account.AccountType.GetType() == typeof(CreditAccount) || account.AccountType.GetType() == typeof(SavingsAccount))
             {
                 XElement irate = new("InterestRate",account.AccountType.InterestRate);
-                XElement period = new("PaymentPeriod", (account.AccountType.PaymentPeriod)/30);
+                account.AccountType.PaymentPeriod = account.AccountType.PaymentPeriod * 30;
+                XElement period = new("PaymentPeriod", (account.AccountType.GetPaymentPeriod(account.AccountType)));
                 acc.Add(irate, period);
             }
             return acc;

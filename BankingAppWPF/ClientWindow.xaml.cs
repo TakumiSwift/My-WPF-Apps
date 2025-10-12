@@ -216,12 +216,13 @@ namespace BankingAppWPF
         private void btnAmountConfirm_Click(object sender, RoutedEventArgs e)
         {
             BankAccountType type = offer;
+            type.PaymentPeriod = type.PaymentPeriod * 30;
             User.AddNewAccount(User,
                                type,
                                LogInData.GetLastAccountNumber(type),
                                Convert.ToUInt64(tbxAmount.Text),
                                Convert.ToByte(type.GetInterestRate(type)),
-                               new TimeSpan(Convert.ToInt32(type.GetPaymentPeriod(type))*30,0,0,0));
+                               new TimeSpan(Convert.ToInt32(type.GetPaymentPeriod(type)),0,0,0));
             Offer.ChangeOfferStatus("accept", idAll[index]);
             offers.Remove(offer);
             idAll.RemoveAt(index);
