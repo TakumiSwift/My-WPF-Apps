@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14 d17.14
+VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingAppWPF", "BankingAppWPF\BankingAppWPF.csproj", "{8B001FF7-2DCF-40BF-97E7-C79F54AD7CB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NailsBot", "NailsBot\NailsBot.csproj", "{8BCDB1E4-9E6C-4162-8897-5E874B1CAB32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8B001FF7-2DCF-40BF-97E7-C79F54AD7CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B001FF7-2DCF-40BF-97E7-C79F54AD7CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B001FF7-2DCF-40BF-97E7-C79F54AD7CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCDB1E4-9E6C-4162-8897-5E874B1CAB32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCDB1E4-9E6C-4162-8897-5E874B1CAB32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCDB1E4-9E6C-4162-8897-5E874B1CAB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCDB1E4-9E6C-4162-8897-5E874B1CAB32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

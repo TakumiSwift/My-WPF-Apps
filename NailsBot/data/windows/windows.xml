@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Windows>
+  <Col month="10" year="2025">
+    <Day num="25">
+      <Time>15:00</Time>
+    </Day>
+    <Day num="26">
+      <Time>15:00</Time>
+    </Day>
+    <Day num="29">
+      <Time>10:00</Time>
+      <Time>15:00</Time>
+    </Day>
+    <Day num="30">
+      <Time>10:00</Time>
+      <Time>15:00</Time>
+    </Day>
+  </Col>
+  <Col month="11" year="2025">
+    <Day num="06">
+      <Time>12:00</Time>
+      <Time>17:00</Time>
+    </Day>
+    <Day num="07">
+      <Time>17:00</Time>
+    </Day>
+    <Day num="10">
+      <Time>12:00</Time>
+      <Time>17:00</Time>
+    </Day>
+    <Day num="11">
+      <Time>12:00</Time>
+      <Time>17;00</Time>
+    </Day>
+    <Day num="14">
+      <Time>12:00</Time>
+      <Time>17:00</Time>
+    </Day>
+    <Day num="15">
+      <Time>17:00</Time>
+    </Day>
+    <Day num="18">
+      <Time>12:00</Time>
+      <Time>17:00</Time>
+    </Day>
+    <Day num="19">
+      <Time>17:00</Time>
+    </Day>
+    <Day num="22">
+      <Time>17:00</Time>
+    </Day>
+    <Day num="23">
+      <Time>12:00</Time>
+      <Time>17:00</Time>
+    </Day>
+    <Day num="26">
+      <Time>12:00</Time>
+      <Time>17:00</Time>
+    </Day>
+    <Day num="27">
+      <Time>12:00</Time>
+      <Time>17:00</Time>
+    </Day>
+    <Day num="30">
+      <Time>12:00</Time>
+      <Time>17:00</Time>
+    </Day>
+  </Col>
+</Windows>
