@@ -768,7 +768,6 @@ namespace NailsBot
         /// <returns></returns>
         public static async Task TakeWindow(ITelegramBotClient botClient, Update upd)
         {
-            string result = Bot.result;
             var userId = upd.Message.From.Id;
             var chatId = upd.Message.Chat.Id;
             var msgText = upd.Message.Text;
@@ -786,11 +785,11 @@ namespace NailsBot
                 case 1:
                     if (msgText != null)
                     {
-                        result += msgText;
+                        Bot.result += msgText;
                         await Ext.SendMsg(
                                 bot: botClient,
                                 chatId: chatId,
-                                Msg: $"Выбрана дата {result}\n"+
+                                Msg: $"Выбрана дата {Bot.result}\n"+
                                       "Введите время занятого окошка\n"+
                                       "В формате \"00:00\"");
                         userState.Step = 2;
@@ -806,12 +805,12 @@ namespace NailsBot
                 case 2:
                     if (msgText != null)
                     {
-                        result += " " + msgText;
+                        Bot.result += " " + msgText;
                         await Ext.SendMsg(
                             bot: botClient,
                             chatId: chatId,
                             Msg: "Выбранное окошко:\n"+
-                                 $"{result.Split(" ")[0]} в {result.Split(" ")[1]}\n"+
+                                 $"{Bot.result.Split(" ")[0]} в {Bot.result.Split(" ")[1]}\n"+
                                  "Если все верно, то введите \"Да\"\n"+
                                  "Если есть ошибки, введите любой текст, выбор начнется сначала");
                         userState.Step = 3;
@@ -827,7 +826,7 @@ namespace NailsBot
                 case 3:
                     if (msgText.ToLower() == "да")
                     {
-                        Bot.data.TakeWindow(result);
+                        Bot.data.TakeWindow(Bot.result);
                         await Ext.SendMsg(
                                 bot: botClient,
                                 chatId: chatId,
@@ -836,7 +835,7 @@ namespace NailsBot
                     }
                     else
                     {
-                        result = "";
+                        Bot.result = "";
                         userState.Step = 0;
                     }
                     break;
