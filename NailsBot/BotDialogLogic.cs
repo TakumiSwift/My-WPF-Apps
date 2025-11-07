@@ -655,6 +655,12 @@ namespace NailsBot
             }
         }
 
+        /// <summary>
+        /// Метод создания нового месяца с окошками
+        /// </summary>
+        /// <param name="botClient"></param>
+        /// <param name="upd"></param>
+        /// <returns></returns>
         public static async Task AddNewMonth(ITelegramBotClient botClient, 
                                              Update upd)
         {
@@ -751,6 +757,112 @@ namespace NailsBot
                     await AddNewMonth(botClient, upd);
                     UserStateManager.UserStates.Remove(userId);
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Метод удаления окошка занятого в обход бота
+        /// </summary>
+        /// <param name="botClient"></param>
+        /// <param name="upd"></param>
+        /// <returns></returns>
+        public static async Task TakeWindow(ITelegramBotClient botClient, Update upd)
+        {
+            string result = Bot.result;
+            var userId = upd.Message.From.Id;
+            var chatId = upd.Message.Chat.Id;
+            var msgText = upd.Message.Text;
+            var userState = UserStateManager.UserStates[userId];
+            switch(userState.Step)
+            {
+                case 0:
+                    await Ext.SendMsg(
+                            bot: botClient,
+                            chatId: chatId,
+                            Msg: "Введите дату занятого окошка\n" +
+                                 "В формате \"01.01\"");
+                    userState.Step = 1;
+                    break;
+                case 1:
+                    if (msgText != null)
+                    {
+                        result += msgText;
+                        await Ext.SendMsg(
+                                bot: botClient,
+                                chatId: chatId,
+                                Msg: $"Выбрана дата {result}\n"+
+                                      "Введите время занятого окошка\n"+
+                                      "В формате \"00:00\"");
+                        userState.Step = 2;
+                    }
+                    else
+                    {
+                        await Ext.SendMsg(
+                                bot: botClient,
+                                chatId: chatId,
+                                Msg: $"Ошибка ввода, попробуйте еще раз.");
+                    }
+                    break;
+                case 2:
+                    if (msgText != null)
+                    {
+                        result += " " + msgText;
+                        await Ext.SendMsg(
+                            bot: botClient,
+                            chatId: chatId,
+                            Msg: "Выбранное окошко:\n"+
+                                 $"{result.Split(" ")[0]} в {result.Split(" ")[1]}\n"+
+                                 "Если все верно, то введите \"Да\"\n"+
+                                 "Если есть ошибки, введите любой текст, выбор начнется сначала");
+                        userState.Step = 3;
+                    }
+                    else
+                    {
+                        await Ext.SendMsg(
+                                bot: botClient,
+                                chatId: chatId,
+                                Msg: $"Ошибка ввода, попробуйте еще раз.");
+                    }
+                    break;
+                case 3:
+                    if (msgText.ToLower() == "да")
+                    {
+                        Bot.data.TakeWindow(result);
+                        await Ext.SendMsg(
+                                bot: botClient,
+                                chatId: chatId,
+                                Msg: "Окошко успешно удалено!");
+                        UserStateManager.UserStates.Remove(userId);
+                    }
+                    else
+                    {
+                        result = "";
+                        userState.Step = 0;
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Метод автоудаления неактуальных записей клиентов
+        /// </summary>
+        /// <param name="botClient"></param>
+        /// <param name="upd"></param>
+        /// <returns></returns>
+        public static async Task DeleteNotesAuto(ITelegramBotClient botClient, Update upd)
+        {
+            var clients = Bot.data.GetAllClients();
+            if (clients.Count > 0)
+            {
+                foreach (var client in clients)
+                {
+                    if (client.Value.ClientNote.Date.Split(" ")[0] == DateTime.Now.Date.ToString("dd.MM"))
+                    {
+                        int res = 0;
+                        Bot.data.DeleteNote(client.Key, out res);
+                        Bot.data.TakeWindow(client.Value.ClientNote.Date);
+                    }
+                }
             }
         }
 

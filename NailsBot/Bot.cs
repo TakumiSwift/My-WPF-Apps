@@ -96,6 +96,8 @@ namespace NailsBot
 
         public static int daysCount;
 
+        public static string result;
+
         /// <summary>
         /// Инициализация и включение бота
         /// </summary>
@@ -121,6 +123,7 @@ namespace NailsBot
             dates = new();
             times = new();
             daysCount = 0;
+            result = "";
         }
 
         /// <summary>
@@ -197,7 +200,8 @@ namespace NailsBot
                 {
                     new() { Command = "/shownotes", Description = "Показать все записи" },
                     new() { Command = "/shownotesbyday", Description = "Показать записи на определенный день" },
-                    new() { Command = "/addnewmonth", Description = "Создать окошки на следующий месяц" }
+                    new() { Command = "/addnewmonth", Description = "Создать окошки на следующий месяц" },
+                    new() { Command = "/takewindow", Description = "Убрать окошки, занятые вне бота" }
                 };
 
                 await botClient.SetMyCommandsAsync(
@@ -285,6 +289,15 @@ namespace NailsBot
                         await BotDialogLogic.AddNewMonth(botClient, update);
                     }
                     break;
+                case "/takewindow":
+                    if (data.IsAdmin(userId))
+                    {
+                        UserStateManager.UserStates.Add(userId, new UserState());
+                        UserStateManager.UserStates[userId].CurrentCommand = "/takewindow";
+                        UserStateManager.UserStates[userId].Step = 0;
+                        await BotDialogLogic.TakeWindow(botClient, update);
+                    }
+                    break;
             }
         }
 
@@ -349,6 +362,10 @@ namespace NailsBot
                                                                                   data);
                             }
                         }
+                        else if (UserStateManager.UserStates[userId].CurrentCommand == "/takewindow")
+                        {
+                            await BotDialogLogic.TakeWindow(botClient, update);
+                        }
                     }
                     return;
                 }
@@ -369,6 +386,7 @@ namespace NailsBot
             if (DateTime.Now.Hour == 18 && (DateTime.Now.Minute >= 00 && DateTime.Now.Minute <= 01))
             {
                 await WindowDate(DateTime.Now);
+                await BotDialogLogic.DeleteNotesAuto(botClient, currentUpd);
             }
         }
 
