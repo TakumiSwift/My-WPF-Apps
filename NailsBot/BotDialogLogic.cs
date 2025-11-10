@@ -837,6 +837,7 @@ namespace NailsBot
                     {
                         Bot.result = "";
                         userState.Step = 0;
+                        await TakeWindow(botClient, upd);
                     }
                     break;
             }
