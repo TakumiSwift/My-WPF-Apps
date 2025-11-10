@@ -831,6 +831,7 @@ namespace NailsBot
                                 bot: botClient,
                                 chatId: chatId,
                                 Msg: "Окошко успешно удалено!");
+                        Bot.result = "";
                         UserStateManager.UserStates.Remove(userId);
                     }
                     else
