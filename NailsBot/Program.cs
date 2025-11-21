@@ -21,9 +21,8 @@ namespace NailsBot
             
             while(true)
             {
-                var taskTimer = Task.Run(Timer);
+                Timer();
                 await Task.Delay(new TimeSpan(0, 0, 45));
-                taskTimer.Dispose();
             }
         }
     }

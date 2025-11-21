@@ -208,13 +208,10 @@ namespace NailsBot
                 UserStateManager.UserStates.Remove(userId);
                 Bot.note.Clear();
 
-                var notifyAdmins = Task.Run( async() =>
+                for (int i = 0; i < 2; i++)
                 {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        await Ext.SendMsg(botClient, Bot.data.GetAdminId()[i], "Кто-то записался!");
-                    }
-                });
+                    await Ext.SendMsg(botClient, Bot.data.GetAdminId()[i], "Кто-то записался!");
+                }
 
                 await botClient.SendTextMessageAsync(
                     chatId: chatId,
@@ -224,8 +221,6 @@ namespace NailsBot
                 );
                 Bot.data.GetClientById(Convert.ToString(chatId), out Bot.users);
                 await Bot.RulesCheck(botClient, Bot.currentUpd);
-                Task.WaitAll(notifyAdmins);
-                notifyAdmins.Dispose();
             }
             catch (Exception ex)
             {

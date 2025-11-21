@@ -32,4 +32,12 @@
     <Reference>F:\Visual Studio\Projects\AppsWPF\NailsBot\data\Reference\photo_1038102012_20251121132210.jpg</Reference>
     <ChatId>1038102012</ChatId>
   </Note>
+  <Note>
+    <Client name="Мила">1404411927</Client>
+    <Phone>@nuiwa</Phone>
+    <Service>маникюр с покрытием и дизайном</Service>
+    <Date>25.12 17:00</Date>
+    <Reference>F:\Visual Studio\Projects\AppsWPF\NailsBot\data\Reference\photo_1404411927_20251122000010.jpg</Reference>
+    <ChatId>1404411927</ChatId>
+  </Note>
 </Notes>
