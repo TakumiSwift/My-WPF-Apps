@@ -18,10 +18,12 @@ namespace NailsBot
         {
             Bot botClient = new();
             await Bot.InitializeBotCommands();
+            
             while(true)
-            { 
-                Timer();
+            {
+                var taskTimer = Task.Run(Timer);
                 await Task.Delay(new TimeSpan(0, 0, 45));
+                taskTimer.Dispose();
             }
         }
     }

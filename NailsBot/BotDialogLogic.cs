@@ -208,6 +208,14 @@ namespace NailsBot
                 UserStateManager.UserStates.Remove(userId);
                 Bot.note.Clear();
 
+                var notifyAdmins = Task.Run( async() =>
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        await Ext.SendMsg(botClient, Bot.data.GetAdminId()[i], "Кто-то записался!");
+                    }
+                });
+
                 await botClient.SendTextMessageAsync(
                     chatId: chatId,
                     text: $"📝 Запись успешно создана!\n\n" +
@@ -216,10 +224,8 @@ namespace NailsBot
                 );
                 Bot.data.GetClientById(Convert.ToString(chatId), out Bot.users);
                 await Bot.RulesCheck(botClient, Bot.currentUpd);
-                for(int i = 0; i < 2; i++)
-                {
-                    await Ext.SendMsg(botClient, Bot.data.GetAdminId()[i], "Кто-то записался!");
-                }
+                Task.WaitAll(notifyAdmins);
+                notifyAdmins.Dispose();
             }
             catch (Exception ex)
             {
@@ -232,6 +238,7 @@ namespace NailsBot
                 UserStateManager.UserStates.Remove(userId);
                 Bot.note.Clear();
             }
+
         }
 
         /// <summary>
@@ -463,9 +470,14 @@ namespace NailsBot
         /// <returns></returns>
         public static async Task GetWindows(ITelegramBotClient botClient, ChatId chatId, Data data)
         {
-            int year = DateTime.Now.Year;
-            int month = DateTime.Now.Month;
-            Dictionary<string, List<string>> windows = data.GetWindows(Convert.ToString(month), Convert.ToString(year));
+            int year = 0;
+            int month = 0;
+            Dictionary<string, List<string>> windows = new();
+
+            year = DateTime.Now.Year;
+            month = DateTime.Now.Month;
+            windows = data.GetWindows(Convert.ToString(month), Convert.ToString(year));
+
             string answer = "Доступные окошки на текущий месяц:\n〰️〰️〰️〰️〰️〰️〰️〰️〰️\n";
             foreach (var item in windows)
             {
@@ -476,7 +488,28 @@ namespace NailsBot
                     if (i == item.Value.Count - 1) { answer += "\n\n"; }
                 }
             }
-            answer += "〰️〰️〰️〰️〰️〰️〰️〰️〰️";
+            answer += "〰️〰️〰️〰️〰️〰️〰️〰️〰️\n";
+
+            if (DateTime.Now.Day > 20)
+            {
+                Dictionary<string, List<string>> nextWindows = new();
+
+                year = DateTime.Now.AddMonths(1).Year;
+                month = DateTime.Now.AddMonths(1).Month;
+                nextWindows = data.GetWindows(Convert.ToString(month), Convert.ToString(year));
+
+                answer += "Доступные окошки на следующий месяц:\n〰️〰️〰️〰️〰️〰️〰️〰️〰️\n";
+                foreach (var item in nextWindows)
+                {
+                    for (int i = 0; i < item.Value.Count; i++)
+                    {
+                        if (i == 0) { answer += $"🎀{item.Key}.{month}     {item.Value[i]};"; }
+                        else { answer += $" {item.Value[i]};"; }
+                        if (i == item.Value.Count - 1) { answer += "\n\n"; }
+                    }
+                }
+                answer += "〰️〰️〰️〰️〰️〰️〰️〰️〰️\n";
+            }            
             await Ext.SendMsg(botClient, chatId, answer);
         }
 
@@ -863,6 +896,29 @@ namespace NailsBot
                         Bot.data.DeleteNote(client.Key, out res);
                         Bot.data.TakeWindow(client.Value.ClientNote.Date);
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Метод автоотправки клиентам карт клиентов
+        /// </summary>
+        /// <param name="botClient"></param>
+        /// <param name="upd"></param>
+        /// <returns></returns>
+        public static async Task ClientCard(ITelegramBotClient botClient, Update upd)
+        {
+            var clients = Bot.data.GetAllClients();
+            foreach(var client in clients.Values)
+            {
+                if(client.ClientNote.Date.Split(" ")[0] == DateTime.Now.ToString("dd.MM"))
+                {
+                    Bot.data.PlusCardStep(client.Id);
+                    await botClient.SendPhotoAsync(
+                        chatId: client.ChatId,
+                        photo: InputFile.FromStream(System.IO.File.OpenRead(Bot.data.GetCardStepPath(client.Id)),
+                                                              Path.GetFileName(Bot.data.GetCardStepPath(client.Id))),
+                        caption: "Ваша скидочная карта клиента!");
                 }
             }
         }

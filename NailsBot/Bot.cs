@@ -387,6 +387,7 @@ namespace NailsBot
             {
                 await WindowDate(DateTime.Now);
                 await BotDialogLogic.DeleteNotesAuto(botClient, currentUpd);
+                await BotDialogLogic.ClientCard(botClient, currentUpd);
             }
         }
 

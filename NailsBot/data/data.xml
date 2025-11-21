@@ -16,4 +16,20 @@
     <Reference>F:\Visual Studio\Projects\AppsWPF\NailsBot\data\Reference\photo_8267999134_20251108204815.jpg</Reference>
     <ChatId>8267999134</ChatId>
   </Note>
+  <Note>
+    <Client name="лисеевна">702702589</Client>
+    <Phone>baborab2000</Phone>
+    <Service>1 рука короткая ДА ЛЕР МЫ ПОД НОЛЬ ДЕЛАЕМ вторая блин я не помню 4 или 5 пох давай 5</Service>
+    <Date>23.11 12:00</Date>
+    <Reference>без пожеланий.</Reference>
+    <ChatId>702702589</ChatId>
+  </Note>
+  <Note>
+    <Client name="Алина">1038102012</Client>
+    <Phone>89375658815</Phone>
+    <Service>Покрытие</Service>
+    <Date>22.11 17:00</Date>
+    <Reference>F:\Visual Studio\Projects\AppsWPF\NailsBot\data\Reference\photo_1038102012_20251121132210.jpg</Reference>
+    <ChatId>1038102012</ChatId>
+  </Note>
 </Notes>

@@ -48,7 +48,9 @@ namespace NailsBot
                 { "windows", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\windows\windows.xml" },
                 { "admins", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\administrators\admins.xml" },
                 { "video", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\location\IMG_2032.MOV" },
-                { "location", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\location\location.jpg" }
+                { "location", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\location\location.jpg" },
+                { "cards", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\cards\cards.xml"},
+                { "cardsteps", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\cards\steps\"}
             };
             data = XDocument.Load(paths["data"]);
             windows = XDocument.Load(paths["windows"]);
@@ -276,14 +278,29 @@ namespace NailsBot
         /// <param name="date">Дата и время окошка</param>
         public void TakeWindow(string date)
         {
-            var day = windows.Root
+            var day = new XElement("a");
+            if (date.Split(" ")[0].Split(".")[1] == "01")
+            {
+                day = windows.Root
                              .Elements("Col")
                              .ToList()
-                             .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.Year)
-                                     && x.Attribute("month").Value == Convert.ToString(DateTime.Now.Month))
+                             .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.AddMonths(1).Year)
+                                     && x.Attribute("month").Value == date.Split(" ")[0].Split(".")[1])
                              .Elements("Day")
                              .ToList()
                              .Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0]);
+            }
+            else
+            {
+                day = windows.Root
+                                 .Elements("Col")
+                                 .ToList()
+                                 .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.Year)
+                                         && x.Attribute("month").Value == date.Split(" ")[0].Split(".")[1])
+                                 .Elements("Day")
+                                 .ToList()
+                                 .Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0]);
+            }
             if(day.Elements("Time").ToList().Count > 1)
             {
                 day.Elements("Time")
@@ -308,18 +325,36 @@ namespace NailsBot
             bool result = true;
             try
             {
-                XElement x = windows.Root
+                if (date.Split(" ")[0].Split(".")[1] == "01")
+                {
+                    XElement x = windows.Root
                                     .Elements("Col")
                                     .ToList()
-                                    .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.Year)
-                                            && x.Attribute("month").Value == Convert.ToString(DateTime.Now.Month))
+                                    .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.AddMonths(1).Year)
+                                            && x.Attribute("month").Value == date.Split(" ")[0].Split(".")[1])
                                     .Elements("Day")
                                     .ToList()
                                     .Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0])
                                     .Elements("Time")
                                     .ToList()
                                     .Find(x => x.Value == date.Split(" ")[1]);
-                if (x == null) { result = false; }
+                    if (x == null) { result = false; }
+                }
+                else
+                {
+                    XElement x = windows.Root
+                                    .Elements("Col")
+                                    .ToList()
+                                    .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.Year)
+                                            && x.Attribute("month").Value == date.Split(" ")[0].Split(".")[1])
+                                    .Elements("Day")
+                                    .ToList()
+                                    .Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0])
+                                    .Elements("Time")
+                                    .ToList()
+                                    .Find(x => x.Value == date.Split(" ")[1]);
+                    if (x == null) { result = false; }
+                }
             }
             catch
             {
@@ -334,48 +369,75 @@ namespace NailsBot
         /// <param name="date"></param>
         public void ReturnWindow(string date)
         {
-            var days = windows.Root
+            var days = new List<XElement>();
+            if (date.Split(" ")[0].Split(".")[1] == "01")
+            {
+                days = windows.Root
+                             .Elements("Col")
+                             .ToList()
+                             .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.AddMonths(1).Year)
+                                     && x.Attribute("month").Value == date.Split(" ")[0].Split(".")[1])
+                             .Elements("Day")
+                             .ToList();
+            }
+            else
+            {
+                days = windows.Root
                              .Elements("Col")
                              .ToList()
                              .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.Year)
-                                     && x.Attribute("month").Value == Convert.ToString(DateTime.Now.Month))
+                                     && x.Attribute("month").Value == date.Split(" ")[0].Split(".")[1])
                              .Elements("Day")
                              .ToList();
-            try
-            {
-                days.Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0])
-                    .Add(new XElement("Time",date.Split(" ")[1]));
-                var times = days.Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0])
-                    .Elements("Time")
-                    .ToList();
-                times.Sort((x, y) =>
+            }
+                try
                 {
-                    int xV = Convert.ToInt32(x.Value.Split(":")[0]);
-                    int yV = Convert.ToInt32(y.Value.Split(":")[0]);
-                    return xV.CompareTo(yV);
-                });
-                days.Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0])
-                    .ReplaceNodes(times);
-            }
-            catch
-            {
-                days.Add(new XElement("Day", 
-                                      new XAttribute("num",date.Split(" ")[0].Split(".")[0]),
-                                      new XElement("Time",date.Split(" ")[1])));
-            }
+                    days.Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0])
+                        .Add(new XElement("Time", date.Split(" ")[1]));
+                    var times = days.Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0])
+                        .Elements("Time")
+                        .ToList();
+                    times.Sort((x, y) =>
+                    {
+                        int xV = Convert.ToInt32(x.Value.Split(":")[0]);
+                        int yV = Convert.ToInt32(y.Value.Split(":")[0]);
+                        return xV.CompareTo(yV);
+                    });
+                    days.Find(x => x.Attribute("num").Value == date.Split(" ")[0].Split(".")[0])
+                        .ReplaceNodes(times);
+                }
+                catch
+                {
+                    days.Add(new XElement("Day",
+                                          new XAttribute("num", date.Split(" ")[0].Split(".")[0]),
+                                          new XElement("Time", date.Split(" ")[1])));
+                }
             days.Sort((x, y) =>
             {
                 int xV = Convert.ToInt32(x.Attribute("num").Value);
                 int yV = Convert.ToInt32(y.Attribute("num").Value);
                 return xV.CompareTo(yV);
             });
-            windows.Root
+            if (date.Split(" ")[0].Split(".")[1] == "01")
+            {
+                windows.Root
+                   .Elements("Col")
+                   .ToList()
+                   .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.AddMonths(1).Year)
+                           && x.Attribute("month").Value == date.Split(" ")[0].Split(".")[1])
+                   .ReplaceNodes(days);
+                windows.Save(paths["windows"]);
+            }
+            else
+            {
+                windows.Root
                    .Elements("Col")
                    .ToList()
                    .Find(x => x.Attribute("year").Value == Convert.ToString(DateTime.Now.Year)
-                           && x.Attribute("month").Value == Convert.ToString(DateTime.Now.Month))
+                           && x.Attribute("month").Value == date.Split(" ")[0].Split(".")[1])
                    .ReplaceNodes(days);
-            windows.Save(paths["windows"]);
+                windows.Save(paths["windows"]);
+            }
         }
 
         /// <summary>
@@ -463,6 +525,102 @@ namespace NailsBot
             i = 0;
             windows.Root.Add(col);
             windows.Save(paths["windows"]);
+        }
+
+        /// <summary>
+        /// Метод проверки существования карты клиента
+        /// </summary>
+        /// <param name="id">id-клиента</param>
+        /// <returns>лог. ответ выражения</returns>
+        private bool CardCheck(string id)
+        {
+            var cards = XDocument.Load(paths["cards"])
+                                 .Root;
+            var card = new XElement("a");
+            bool result = false;
+            try
+            {
+                card = cards.Elements().ToList().Find(x => x.Attribute("id").Value == id);
+                result = true;
+            }
+            catch { result = false; }
+            return result;
+        }
+
+        /// <summary>
+        /// Метод создания новой карты клиента
+        /// </summary>
+        /// <param name="id">id-клиента</param>
+        private void CardCreate(string id)
+        {
+            XElement card = new("Card", new XAttribute("id", id), new XAttribute("step", "1"));
+            var cards = XDocument.Load(paths["cards"]);
+            cards.Root.Add(card);
+            cards.Save(paths["cards"]);
+        }
+
+        /// <summary>
+        /// Метод изменения значения карты клиента
+        /// </summary>
+        /// <param name="id">id-клиента</param>
+        public void PlusCardStep(string id)
+        {
+            if(CardCheck(id))
+            {
+                var cards = XDocument.Load(paths["cards"]);
+                var step = cards.Root
+                                .Elements()
+                                .ToList()
+                                .Find(x => x.Attribute("id").Value == id)
+                                .Attribute("step");
+                if (step.Value == "9")
+                {
+                    cards.Root
+                         .Elements()
+                         .ToList()
+                         .Find(x => x.Attribute("id").Value == id)
+                         .Remove();
+                    CardCreate(id);
+                }
+                else
+                {
+                    step.Value = Convert.ToString(Convert.ToInt32(step.Value) + 1);
+                }
+                cards.Save(paths["cards"]);
+            }
+            else
+            {
+                CardCreate(id);
+            }
+        }
+
+        /// <summary>
+        /// Метод получения пути до файла карты клиента
+        /// </summary>
+        /// <param name="id">id-клиента</param>
+        /// <returns>путь до файла карты клиента</returns>
+        public string GetCardStepPath(string id)
+        {
+            var cards = XDocument.Load(paths["cards"]);
+            string path = "";
+            try
+            {
+                var card = cards.Root.Elements().ToList().Find(x => x.Attribute("id").Value == id);
+                var step = card.Attribute("step").Value;
+                path = $"{paths["cardsteps"]}step{step}.jpg";
+            }
+            catch
+            {
+                CardCreate(id);
+                var card = XDocument.Load(paths["cards"])
+                                    .Root
+                                    .Elements()
+                                    .ToList()
+                                    .Find(x => x.Attribute("id").Value == id);
+                var step = card.Attribute("step").Value;
+                path = $"{paths["cardsteps"]}step{step}.jpg";
+            }
+            return path;
         }
 
     }
