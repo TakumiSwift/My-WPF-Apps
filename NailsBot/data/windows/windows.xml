@@ -16,25 +16,15 @@
       <Time>15:00</Time>
     </Day>
   </Col>
-  <Col month="11" year="2025">
-    <Day num="27">
-      <Time>12:00</Time>
-    </Day>
-    <Day num="30">
-      <Time>12:00</Time>
-    </Day>
-  </Col>
+  <Col month="11" year="2025" />
   <Col month="12" year="2025">
     <Day num="01">
       <Time>12:00</Time>
-      <Time>17:00</Time>
     </Day>
     <Day num="04">
-      <Time>12:00</Time>
       <Time>17:00</Time>
     </Day>
     <Day num="05">
-      <Time>12:00</Time>
       <Time>17:00</Time>
     </Day>
     <Day num="08">
@@ -66,21 +56,10 @@
       <Time>17:00</Time>
     </Day>
     <Day num="21">
-      <Time>12:00</Time>
-      <Time>17:00</Time>
-    </Day>
-    <Day num="24">
       <Time>17:00</Time>
     </Day>
     <Day num="25">
-      <Time>12:00</Time>
-    </Day>
-    <Day num="28">
-      <Time>12:00</Time>
       <Time>17:00</Time>
-    </Day>
-    <Day num="29">
-      <Time>12:00</Time>
     </Day>
   </Col>
 </Windows>

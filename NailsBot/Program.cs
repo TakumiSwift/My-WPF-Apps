@@ -22,7 +22,7 @@ namespace NailsBot
             while(true)
             {
                 Timer();
-                await Task.Delay(new TimeSpan(0, 0, 45));
+                await Task.Delay(new TimeSpan(0, 1, 0));
             }
         }
     }

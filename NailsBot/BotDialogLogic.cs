@@ -323,6 +323,7 @@ namespace NailsBot
             switch (message.Text.ToLower())
             {
                 case "да":
+                    Bot.flag2 = true;
                     await EndAddNoteDialog(botClient, message.From.Id, chatId, userState, Bot.flag1);
                     return;
                 case "имя":
@@ -399,11 +400,11 @@ namespace NailsBot
                         return;
                     }
                     if (Bot.flag1)
-                    { 
+                    {
                         userState.Date = message.Text;
                     }
-                    else 
-                    { 
+                    else
+                    {
                         Bot.data.ReturnWindow(userState.Date);
                         userState.Date = message.Text;
                     }
@@ -424,6 +425,7 @@ namespace NailsBot
                     }
                     break;
             }
+            Bot.flag2 = true;
             await EndAddNoteDialog(botClient, message.From.Id, chatId, userState, Bot.flag1);
         }
 
@@ -890,6 +892,18 @@ namespace NailsBot
                         int res = 0;
                         Bot.data.DeleteNote(client.Key, out res);
                         Bot.data.TakeWindow(client.Value.ClientNote.Date);
+                        // Команды для обычных пользователей
+                        var defaultCommands = new List<BotCommand>
+                        {
+                            new() { Command = "/addnewnote", Description = "💌Записаться" },
+                            new() { Command = "/cancelmynote", Description = "❌Отменить запись" },
+                            new() { Command = "/price", Description = "💸Прайс услуг" },
+                            new() { Command = "/windows", Description = "📆Окошки" },
+                            new() { Command = "/location", Description = "📍Как добраться?"}
+                        };
+                        await botClient.SetMyCommandsAsync(
+                                        commands: defaultCommands,
+                                        scope: BotCommandScope.Chat(client.Value.ChatId));
                     }
                 }
             }

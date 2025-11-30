@@ -378,16 +378,17 @@ namespace NailsBot
         /// <param name="user"></param>
         private static async void TimeCheck()
         {
-            if (DateTime.Now.Hour == 12 && (DateTime.Now.Minute >= 00 && DateTime.Now.Minute <= 01))
+            if (DateTime.Now.Hour == 12 && (DateTime.Now.Minute == 00 || DateTime.Now.Minute == 01))
             {
                 await CurrentDate(DateTime.Now, data.GetAllClients());
                 await WindowDate(DateTime.Now);
             }
-            if (DateTime.Now.Hour == 18 && (DateTime.Now.Minute >= 00 && DateTime.Now.Minute <= 01))
+            if (DateTime.Now.Hour == 18 && (DateTime.Now.Minute == 00 || DateTime.Now.Minute == 01))
             {
-                await WindowDate(DateTime.Now);
-                await BotDialogLogic.DeleteNotesAuto(botClient, currentUpd);
                 await BotDialogLogic.ClientCard(botClient, currentUpd);
+                await Task.Delay(50);
+                await BotDialogLogic.DeleteNotesAuto(botClient, currentUpd);
+                await WindowDate(DateTime.Now);
             }
         }
 

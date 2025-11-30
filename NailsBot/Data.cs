@@ -41,16 +41,16 @@ namespace NailsBot
         {
             paths = new Dictionary<string, string>
             {
-                { "data" , @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\data.xml" },
-                { "reference" , @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\Reference\"},
-                { "price1" , @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\price\price1.jpg" },
-                { "price2" , @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\price\price2.jpg" },
-                { "windows", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\windows\windows.xml" },
-                { "admins", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\administrators\admins.xml" },
-                { "video", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\location\IMG_2032.MOV" },
-                { "location", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\location\location.jpg" },
-                { "cards", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\cards\cards.xml"},
-                { "cardsteps", @"F:\Visual Studio\Projects\AppsWPF\NailsBot\data\cards\steps\"}
+                { "data" , @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\data.xml" },
+                { "reference" , @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\Reference\"},
+                { "price1" , @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\price\price1.jpg" },
+                { "price2" , @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\price\price2.jpg" },
+                { "windows", @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\windows\windows.xml" },
+                { "admins", @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\administrators\admins.xml" },
+                { "video", @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\location\IMG_2032.MOV" },
+                { "location", @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\location\location.jpg" },
+                { "cards", @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\cards\cards.xml"},
+                { "cardsteps", @"D:\Visual Studio\Projects\AppsWPF\NailsBot\data\cards\steps\"}
             };
             data = XDocument.Load(paths["data"]);
             windows = XDocument.Load(paths["windows"]);
@@ -541,7 +541,8 @@ namespace NailsBot
             try
             {
                 card = cards.Elements().ToList().Find(x => x.Attribute("id").Value == id);
-                result = true;
+                if(card.Value != null) result = true;
+                else result = false;
             }
             catch { result = false; }
             return result;
