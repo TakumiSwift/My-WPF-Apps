@@ -71,7 +71,7 @@ namespace NailsBot
         public static bool flag3;
 
         /// <summary>
-        /// Последнее отправленное пользователем сообщение
+        /// Последнее отправленное ботом сообщение
         /// </summary>
         public static Message lastMsg;
 
@@ -138,6 +138,7 @@ namespace NailsBot
                                                    CancellationToken cancellationToken)
         {
             currentUpd = update;
+            await Program.WriteLog();
             if (update.Type != UpdateType.Message)
                 return;
             if (data.ContainClient(Convert.ToString(update.Message.From.Id)))
@@ -154,10 +155,23 @@ namespace NailsBot
         }
 
         public static async Task HandleErrorAsync(ITelegramBotClient botClient,
-                                                  Exception exception, 
+                                                  Exception exception,
                                                   CancellationToken cancellationToken)
         {
-            Console.WriteLine($"Произошла ошибка: {exception.Message}");
+            string date = DateTime.Now.ToString("dd-MM-yy");
+            string path = @"D:\Visual Studio\Projects\AppsWPF\NailsBot\logs\" + date + ".txt";
+            Console.WriteLine($"Произошла ошибка: {exception.Message} В {exception.TargetSite}");
+            using (var fileStream = System.IO.File.AppendText(path))
+            {
+                fileStream.Write("текст сообщения: \"" +
+                                 currentUpd.Message.Text?.ToString() +
+                                 "\" id юзера: " +
+                                 currentUpd.Message.Chat.Id +
+                                 $" последний ответ бота: \"{lastMsg.Text?.ToString()}\" " +
+                                 $"Произошла ошибка: В {exception.TargetSite} "+
+                                 $"вызвал ошибку {exception.Source} Описание: {exception.Message}");
+                fileStream.WriteLine(DateTime.Now.ToString("\tHH:mm:ss"));
+            }
         }
 
         /// <summary>
@@ -382,6 +396,7 @@ namespace NailsBot
             {
                 await CurrentDate(DateTime.Now, data.GetAllClients());
                 await WindowDate(DateTime.Now);
+                await Program.WriteLog(DateTime.Now);
             }
             if (DateTime.Now.Hour == 18 && (DateTime.Now.Minute == 00 || DateTime.Now.Minute == 01))
             {
@@ -389,6 +404,7 @@ namespace NailsBot
                 await Task.Delay(50);
                 await BotDialogLogic.DeleteNotesAuto(botClient, currentUpd);
                 await WindowDate(DateTime.Now);
+                await Program.WriteLog(DateTime.Now);
             }
         }
 

@@ -37,7 +37,7 @@ namespace NailsBot
             );
             await Task.Delay(3000);
             await botClient.DeleteMessageAsync(chatId, msg.MessageId);
-            await botClient.SendTextMessageAsync(
+            Bot.lastMsg = await botClient.SendTextMessageAsync(
                 chatId: chatId,
                 text: "✨Давайте начнем!\n\nКак Вас зовут?"
             );
@@ -67,7 +67,7 @@ namespace NailsBot
                     userState.ClientName = messageText;
                     userState.Step = 2;
 
-                    await botClient.SendTextMessageAsync(
+                    Bot.lastMsg = await botClient.SendTextMessageAsync(
                         chatId: chatId,
                         text: $"Приятно познакомиться!\n\n📱 Как с вами связаться?\n\n" +
                               $"Пожалуйста, укажите:\n" +
@@ -80,7 +80,7 @@ namespace NailsBot
                     userState.Phone = messageText;
                     userState.Step = 3;
 
-                    await botClient.SendTextMessageAsync(
+                    Bot.lastMsg = await botClient.SendTextMessageAsync(
                         chatId: chatId,
                         text: "Записала!\n💅Теперь укажите: на какую услугу вы хотите записаться?\n\n" +
                               "Посмотреть список оказываемых услуг вы можете, прописав команду\n" +
@@ -93,7 +93,7 @@ namespace NailsBot
                     userState.Service = messageText;
                     userState.Step = 4;
 
-                    await botClient.SendTextMessageAsync(
+                    Bot.lastMsg = await botClient.SendTextMessageAsync(
                         chatId: chatId,
                         text: "Прекрасный выбор!\n🗓️Теперь выберите окошко для записи:\n\n" +
                               "Когда подберете удобные Вам дату и время\n" +
@@ -109,7 +109,7 @@ namespace NailsBot
                         string[] line = messageText.Split(' ');
                         userState.Step = 5;
 
-                        await botClient.SendTextMessageAsync(
+                        Bot.lastMsg = await botClient.SendTextMessageAsync(
                             chatId: chatId,
                             text: $"Увидимся {line[0]} в {line[1]}!\n" +
                                   $"🎨Есть ли у вас пожелания к маникюру?\n\n" +
@@ -122,7 +122,8 @@ namespace NailsBot
                     }
                     catch
                     {
-                        await botClient.SendTextMessageAsync(chatId, "Произошла ошибка ввода, попробуйте еще раз!\n"+
+                        Bot.lastMsg = await botClient.SendTextMessageAsync(chatId,
+                                                                     "Произошла ошибка ввода, попробуйте еще раз!\n"+
                                                                      "Пожалуйста, напишите \nВыбранные дату и время "+
                                                                      "из списка окошек\nВ формате \"01.01  10:00\"");
                         userState.Step = 4;
@@ -147,12 +148,12 @@ namespace NailsBot
                     catch
                     {
                         userState.Step = 5;
-                        await Ext.SendMsg(botClient, chatId, "Произошла ошибка, попробуйте еще раз!");
+                        Bot.lastMsg = await Ext.SendMsg(botClient, chatId, "Произошла ошибка, попробуйте еще раз!");
                     }
                     break;
                 case 6: // Шаг 6 Проверка введенных данных
                     userState.Step = 7;
-                    await botClient.SendTextMessageAsync(
+                    Bot.lastMsg = await botClient.SendTextMessageAsync(
                           chatId: chatId,
                           text: "Хорошо!\nТеперь, пожалуйста " +
                                 "проверьте вашу запись перед отправкой:\n\n" +
@@ -213,7 +214,7 @@ namespace NailsBot
                     await Ext.SendMsg(botClient, Bot.data.GetAdminId()[i], "Кто-то записался!");
                 }
 
-                await botClient.SendTextMessageAsync(
+                Bot.lastMsg = await botClient.SendTextMessageAsync(
                     chatId: chatId,
                     text: $"📝 Запись успешно создана!\n\n" +
                           $"Буду ждать Вас по адресу:\n" +
@@ -224,7 +225,7 @@ namespace NailsBot
             }
             catch (Exception ex)
             {
-                await botClient.SendTextMessageAsync(
+                Bot.lastMsg = await botClient.SendTextMessageAsync(
                     chatId: chatId,
                     text: $"❌ Произошла ошибка при создании записи {ex}. Попробуйте снова."
                 );
@@ -260,7 +261,8 @@ namespace NailsBot
                 var fileInfo = await botClient.GetFileAsync(fileId);
                 if (fileInfo == null)
                 {
-                    await botClient.SendTextMessageAsync(chatId, "Не удалось получить информацию о файле от Telegram.");
+                    Bot.lastMsg = await botClient.SendTextMessageAsync(chatId,
+                                                               "Не удалось получить информацию о файле от Telegram.");
                     return;
                 }
 
@@ -297,7 +299,7 @@ namespace NailsBot
             }
             catch (Exception ex)
             {
-                await botClient.SendTextMessageAsync(
+                Bot.lastMsg = await botClient.SendTextMessageAsync(
                     chatId: chatId,
                     text: $"❌ Ошибка при загрузке фото: {ex.Message}"
                 );
@@ -351,7 +353,7 @@ namespace NailsBot
                     line = "новые Дату и время:";
                     break;
                 default:
-                    await Ext.SendMsg(botClient, chatId, "Указанный Вами пункт отстутствует,\n" +
+                    Bot.lastMsg = await Ext.SendMsg(botClient, chatId, "Указанный Вами пункт отстутствует,\n" +
                                                          "Либо вы ошиблись.\nПопробуйте еще раз!");
                     Bot.flag2 = true;
                     userState.Step = 6;
@@ -440,7 +442,7 @@ namespace NailsBot
         /// <returns></returns>
         public static async Task GetPrice(ITelegramBotClient botClient, ChatId chatId, Data data)
         {
-            botClient.SendTextMessageAsync(chatId, "💸Вот актуальный прайс:");
+            Bot.lastMsg = await botClient.SendTextMessageAsync(chatId, "💸Вот актуальный прайс:");
             await using (var fileStream = new FileStream(data.GetPaths("price1"), FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 await botClient.SendPhotoAsync(
@@ -507,7 +509,7 @@ namespace NailsBot
                 }
                 answer += "〰️〰️〰️〰️〰️〰️〰️〰️〰️\n";
             }            
-            await Ext.SendMsg(botClient, chatId, answer);
+            Bot.lastMsg = await Ext.SendMsg(botClient, chatId, answer);
         }
 
         /// <summary>
@@ -520,8 +522,9 @@ namespace NailsBot
         {
             int res = 1;
             data.DeleteNote(Convert.ToString(upd.Message.From.Id), out res);
-            if (res == 1) { await botClient.SendTextMessageAsync(upd.Message.Chat.Id, "Ваша запись была удалена!"); }
-            else { await botClient.SendTextMessageAsync(upd.Message.Chat.Id, "У Вас не было записи!"); }
+            if (res == 1) { Bot.lastMsg = await botClient.SendTextMessageAsync(upd.Message.Chat.Id,
+                                                                               "Ваша запись была удалена!"); }
+            else { Bot.lastMsg = await botClient.SendTextMessageAsync(upd.Message.Chat.Id, "У Вас не было записи!"); }
             Bot.users.Remove(upd.Message.From.Id);
             await Bot.RulesCheck(botClient,Bot.currentUpd);
         }
@@ -631,7 +634,7 @@ namespace NailsBot
             {
                 if (day.Day + 1 == Convert.ToInt32(item.Value.ClientNote.Date.Split(" ")[0].Split(".")[0]))
                 {
-                    await Ext.SendMsg(Bot.botClient,
+                    Bot.lastMsg = await Ext.SendMsg(Bot.botClient,
                                       item.Value.ChatId,
                                       $"🔔Напоминаю Вам о записи на завтра " +
                                       $"в {item.Value.ClientNote.Date.Split(" ")[1]}!\n"+
@@ -667,7 +670,7 @@ namespace NailsBot
         {
             try
             {
-                await botClient.SendTextMessageAsync(
+                Bot.lastMsg = await botClient.SendTextMessageAsync(
                     chatId: upd.Message.Chat.Id,
                     text: "📝 Ваша запись:\n\n" +
                          $"🪪 Имя, указанное в записи: <i><b>{user.Name}</b></i>\n" +
@@ -678,7 +681,7 @@ namespace NailsBot
             }
             catch
             {
-                await Ext.SendMsg(
+                Bot.lastMsg = await Ext.SendMsg(
                     bot: botClient,
                     chatId: upd.Message.Chat.Id,
                     Msg: "У вас нет активной записи!");
