@@ -8,12 +8,4 @@
     <Reference></Reference>
     <ChatId></ChatId>
   </Note>
-  <Note>
-    <Client name="Ксюша">8267999134</Client>
-    <Phone>89093821973 nerreey</Phone>
-    <Service>Наращивание до 3 длины</Service>
-    <Date>30.11 17:00</Date>
-    <Reference>D:\Visual Studio\Projects\AppsWPF\NailsBot\data\Reference\photo_8267999134_20251108204815.jpg</Reference>
-    <ChatId>8267999134</ChatId>
-  </Note>
 </Notes>

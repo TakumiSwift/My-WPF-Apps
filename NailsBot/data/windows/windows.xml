@@ -1,35 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Windows>
-  <Col month="10" year="2025">
-    <Day num="25">
-      <Time>15:00</Time>
-    </Day>
-    <Day num="26">
-      <Time>15:00</Time>
-    </Day>
-    <Day num="29">
-      <Time>10:00</Time>
-      <Time>15:00</Time>
-    </Day>
-    <Day num="30">
-      <Time>10:00</Time>
-      <Time>15:00</Time>
-    </Day>
-  </Col>
+  <Col month="10" year="2025" />
   <Col month="11" year="2025" />
   <Col month="12" year="2025">
-    <Day num="01">
-      <Time>12:00</Time>
-    </Day>
     <Day num="04">
-      <Time>17:00</Time>
-    </Day>
-    <Day num="05">
       <Time>17:00</Time>
     </Day>
     <Day num="08">
       <Time>12:00</Time>
-      <Time>17:00</Time>
     </Day>
     <Day num="09">
       <Time>12:00</Time>
@@ -40,7 +18,6 @@
       <Time>17:00</Time>
     </Day>
     <Day num="13">
-      <Time>12:00</Time>
       <Time>17:00</Time>
     </Day>
     <Day num="16">
@@ -52,13 +29,6 @@
       <Time>17:00</Time>
     </Day>
     <Day num="20">
-      <Time>12:00</Time>
-      <Time>17:00</Time>
-    </Day>
-    <Day num="21">
-      <Time>17:00</Time>
-    </Day>
-    <Day num="25">
       <Time>17:00</Time>
     </Day>
   </Col>
